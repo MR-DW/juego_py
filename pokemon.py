@@ -3,126 +3,163 @@ class Pokemones:
         self.nombre = nombre
         self.tipo=tipo
         self.ataque_especial = ataque_especial
-        self.ataque_comun=ataque_comun
+        self.ataque_comun = ataque_comun
         self.puntos_salud=puntos_salud
     
-    def atacar(self,arg):
-        a='a'
-        b='b'
-        if arg == a:
-            print(f'Usó {self.ataque_comun}')
-        elif arg == b:
-            print(f'Usó {self.ataque_especial}')
-
-    def recibir_ataque(self, arg):
-        a = 25
-        b = 45
-        if arg == a:
-            self.puntos_salud -= a
-            print(f'Perdió puntos de salud, su vida total es: {self.puntos_salud}')
-        elif arg == b:
-            self.puntos_salud -= b
-            print(f'Perdió puntos de salud, su vida total es: {self.puntos_salud}')
-        else:
-            print('No existe ese ataque')
+    #función para atacar
+    def atacar_comun(self):
+        print(f'Usó {self.ataque_comun}')
+        
+    def atacar_especial(self):
+        print(f'{self.ataque_especial}')
     
+    #función para restar vida
+    def recibir_danio_comun(self):
+        self.puntos_salud -= 25
+        print(f'Perdió 25 puntos de salud, su vida total es: {self.puntos_salud}')
+    
+    def recibir_danio_especial(self):
+        self.puntos_salud -= 45
+        print(f'Perdió 45 puntos de salud, su vida total es: {self.puntos_salud}')
+        
+    
+    #función para esquivar ataques y no perder vida
     def esquivar(self):
-        print('Esquivó su ataque')
+        print(f'Esquivó tu ataque')
     
+    #función para regresar tu pokemon
     def regresar(self):
         if self.puntos_salud <= 0:
             print('Regresa...') 
         else:
             print('No puede regresar, aún tiene puntos de salud')   
 
-
+#Creación de pokemon especifico.
 class Pokemon(Pokemones):
     def __init__(self, nombre, tipo, ataque_especial, ataque_comun, puntos_salud):
         super().__init__(nombre, tipo, ataque_especial, ataque_comun, puntos_salud)
-    
-    
+
+#Pokemon ya creados.
 charmander = Pokemon('Charmander', 'Fuego', 'Lanza Llamas', 'arañazo', 100)
-# print(f' Mi primer pokemon es {pokemon_1.nombre} es de tipo {pokemon_1.tipo} quiero enseñarle {pokemon_1.ataque_especial}, \n solo sabe {pokemon_1.ataque_comun}.')
 bolbasur = Pokemon('Bolbasur', 'Planta', 'Hojas Filosas', 'Embestida', 100)
-# print(f' Mi segundo pokemon es {pokemon_2.nombre} es de tipo {pokemon_2.tipo} quiero enseñarle {pokemon_2.ataque_especial}, \n solo sabe {pokemon_2.ataque_comun}.')
-pikachu = Pokemon('Pikachu', 'Electrico', 'Rayo', 'Embestida', 100)
+pikachu = Pokemon('Pikachu', 'Electrico', 'Rayo', 'Ataque Rápido', 100)
 squirtle = Pokemon('Squirtle', 'Agua', 'Chorro de Agua', 'Embestida', 100)
 
 
 
+#Creación de jugador
 class Jugador:
-    def __init__(self,nombre_jugador):
+
+    def __init__(self,nombre_jugador,):
         self.nombre_jugador=nombre_jugador
-    
+        
+
+
+    #función para dar identidad al jugador.
     def dar_nombre(self):
         self.nombre_jugador = input('Intoruzca su nombre: ')
-        print(f'Bienvenido {self.nombre_jugador}')
-    
-    def elegir_pokemon(self):
-        eleccion = input('Seleccione un pokemón: a-Pikachu b-Charmander c-Bolbasur d-Squirtle: ')
+        print(f'Bienvenido entrenador {self.nombre_jugador}')
 
-        if eleccion == 'a':
-           select1 = print(f'Elegiste a {pikachu.nombre}')
-        elif eleccion == 'b':
-           select1 = print(f'Elegiste a {charmander.nombre}')
-        elif eleccion == 'c':
-           select1 = print(f'Elegiste a {bolbasur.nombre}')
-        elif eleccion == 'd':
-           select1 = print(f'Elegiste a {squirtle.nombre}')   
-        else:
-             print('Selección no válida.')
-    
-        eleccion2 = input('Seleccione un pokemón oponente: m-Pikachu n-Charmander o-Bolbasur p-Squirtle: ')
+    #Creación de lista que contendrá a los combatientes.
+    combate = []       
+    #función para elegir un pokemon ya creado.
+    def elegir_pokemon(self,combate):
+      
+        eleccion = input(f'Seleccione un pokemón: Pikachu Charmander Bolbasur Squirtle: ')
+        eleccion = eleccion.lower()
         
-        if eleccion2 == 'm':
-           select2 = print(f'Elegiste a {pikachu.nombre}')
-        elif eleccion2 == 'n':
-            select2 = print(f'Elegiste a {charmander.nombre}')
-        elif eleccion2 == 'o':
-           select2 =  print(f'Elegiste a {bolbasur.nombre}')
-        elif eleccion2 == 'p':
-            select2 = print(f'Elegiste a {squirtle.nombre}')    
-        else:
-             print('Selección no válida.')
+        if eleccion == 'pikachu':
+            combate.append(pikachu)
+            print(f'Elegiste a {combate[0].nombre}') 
+        elif eleccion == 'charmander':
+            combate.append(charmander)
+            print(f'Elegiste a {combate[0].nombre}') 
+        elif eleccion == 'bolbasur':
+            combate.append(bolbasur)
+            print(f'Elegiste a {combate[0].nombre}') 
+        elif eleccion == 'squirtle':
+            combate.append(squirtle)    
+            print(f'Elegiste a {combate[0].nombre}') 
 
-        print(f'Inicia tu combate: {select1} vs {select2}')
-
-    def elegir_movimiento(self):
-        eleccion = input('Seleccione un movimiento: a-Atacar b-Esquivar c-Regresar: ')
-        a = 'a'
-        b= 'b'
-        c= 'c'
-        if eleccion == a:
-            (f'{Pokemon.atacar}')
-        elif eleccion == b:
-            (f'{Pokemon.esquivar}')
-        elif eleccion == c:
-            (f'{Pokemon.regresar}')
-        else:
-            ('Selección no válida.')
-
-class Maquina:
-    def __init__(self,nombre_jugador):
-        self.nombre_jugador=nombre_jugador
+        eleccion2 = input(f'Seleccione un pokemón rival: Pikachu Charmander Bolbasur Squirtle: ')
+        eleccion2 = eleccion2.lower()
         
-    def elegir_movimiento(self):
-        eleccion = input('Seleccione un movimiento: a-Atacar b-Esquivar c-Regresar: ')
-        a = 'a'
-        b= 'b'
-        c= 'c'
-        if eleccion == a:
-            (f'{Pokemon.atacar}')
-        elif eleccion == b:
-            (f'{Pokemon.esquivar}')
-        elif eleccion == c:
-            (f'{Pokemon.regresar}')
+        if eleccion2 == 'pikachu':
+            combate.append(pikachu)
+            print(f'Elegiste a {combate[1].nombre}') 
+        elif eleccion2 == 'charmander':
+            combate.append(charmander)
+            print(f'Elegiste a {combate[1].nombre}') 
+        elif eleccion2 == 'bolbasur':
+            combate.append(bolbasur)
+            print(f'Elegiste a {combate[1].nombre}') 
+        elif eleccion2 == 'squirtle':
+            combate.append(squirtle)    
+            print(f'Elegiste a {combate[1].nombre}') 
+        
+        print(f'El combate será entre {combate[0].nombre} vs {combate[1].nombre}')
+
+    def luchar(self,combate):
+        eleccion_mov= input(f'Seleccione un movimiento para {combate[0].nombre}: a-{combate[0].ataque_comun} b-{combate[0].ataque_especial} c-Esquivar d-Regresar: ')
+        
+        if eleccion_mov == 'a': 
+            print(combate[0].nombre) 
+            combate[0].atacar_comun()       
+            print(combate[1].nombre)    
+            combate[1].recibir_danio_comun()
+        
+        elif eleccion_mov == 'b':
+            combate[0].atacar_especial()
+            print(combate[1].nombre)
+            combate[1].recibir_danio_especial()   
+
+        elif eleccion_mov == 'c':
+            print(combate[0].nombre)
+            combate[0].esquivar()
+        elif eleccion_mov == 'd':
+            print(combate[0].nombre) 
+            combate[0].regresar()
         else:
-            ('Selección no válida.')
+            ('Selección no válida, pierde turno.')   
+
+ #función de ataque de rival bot
+    def luchar_rival(self,combate):
+        eleccion_mov_bot= ['a','b','c','d','e']
+        
+        
+        for letra in eleccion_mov_bot:
+                        
+            if letra == 'a': 
+                print(combate[1].nombre) 
+                combate[1].atacar_comun()       
+                print(combate[0].nombre)    
+                combate[0].recibir_danio_comun()
+                break
+            elif letra == 'b':
+                print(combate[1].nombre) 
+                combate[1].atacar_especial()
+                print(combate[0].nombre)
+                combate[0].recibir_danio_especial()   
+                break
+            elif letra == 'c':
+                print(combate[1].nombre)
+                combate[1].esquivar()
+                break
+            elif letra == 'd':
+                print(combate[1].nombre) 
+                combate[1].regresar()
+                break
+            else:
+                print('Selección no válida, pierde turno.')
+                break   
+  #función para asignar los movimientos a tu pokemon rival. usar un while que seleccione random los movimientos que sabe el obj pokemon hasta que combste[1].puntos_salud == 0       
+    
 
 player = Jugador('Jugador 1')
-# player.dar_nombre()
-player.elegir_pokemon()
-player.elegir_movimiento()
+player.dar_nombre()
+player.elegir_pokemon(player.combate)
+player.luchar(player.combate)
+player.luchar_rival(player.combate)
 
 
 
@@ -130,24 +167,3 @@ player.elegir_movimiento()
 
 
 
-
-
-# print(charmander.nombre)
-# charmander.atacar('a')
-# print(bolbasur.nombre)
-# bolbasur.recibir_ataque(25)
-# print(bolbasur.nombre)
-# bolbasur.atacar('a')
-# print(charmander.nombre)
-# charmander.esquivar()
-# print(charmander.nombre)
-# charmander.atacar('b')
-# print(bolbasur.nombre)
-# bolbasur.recibir_ataque(45)
-# bolbasur.regresar()
-# print(charmander.nombre)
-# charmander.atacar('b')
-# print(bolbasur.nombre)
-# bolbasur.recibir_ataque(45)
-# print(bolbasur.nombre)
-# bolbasur.regresar()
